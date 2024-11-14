@@ -1,29 +1,25 @@
 Consider the third order plant
-
 $$y=G(x)u$$
-
 where
 
 $$G(s)=\dfrac{b_2s^2+b_1s+b_0}{s^3+a_2s^2+a_1s+a_0}$$
 
 (a) For the case where all parameters are unknown, obtain a static linear parametric model (SPM) of the plant. Assume that $u$ and $y$ are available for measurement, but their derivatives are not.
 
-(b) For the case where it is known that $$a_0=b_2=2$$, obtain a parametric model for the plant in terms of $$\theta^*=[b_1,b_0,a_2,a_1]^T$$.
+(b) For the case where it is known that $a_0=b_2=2$, obtain a parametric model for the plant in terms of $\theta^* =[b_1,b_0,a_2,a_1]^T$.
 
-(c\) For the case where it is known that $$b_0=b_1=0, b_2=3$$ obtain a parametric model in terms of $$\theta^*=[a_2,a_1,a_0]^T$$. Design and simulate in Matlab/Simulink a gradient based algorithm to generate on line esrimates of $\theta^*$. For the actual system you can take $a_0=b_2=2,b_0=b_1=0,b_2=3,a_1=a_2=2$. First use $u(t)=1$, then use $u(t)=\sin(0.2t)+\sin(t)$. Compare the different results.
+(c\) For the case where it is known that $b_0=b_1=0, b_2=3$ obtain a parametric model in terms of $\theta^* =[a_2,a_1,a_0]^T$. Design and simulate in Matlab/Simulink a gradient based algorithm to generate on line esrimates of $\theta^* $. For the actual system you can take $a_0=b_2=2,b_0=b_1=0,b_2=3,a_1=a_2=2$. First use $u(t)=1$, then use $u(t)=\sin(0.2t)+\sin(t)$. Compare the different results.
+
 Solution:
-(a) since $u$ and $y$ are available for measurement, but their derivatives are not,
-both sides time $s^3 + a_2s^2+a_1s+a_0$, then
-$$
-(s^3+a_2s^2+a_1s+a_0)y=(b_2s^2+b_1s+b_0)u
-$$solution 1
+
+(a) both sides time $s^3 + a_2s^2 +a_1s+a_0 $, then
+$$(s^3+a_2s^2+a_1s+a_0)y=(b_2s^2+b_1s+b_0)u$$
+so we get the solution
 $$y'''+a_2y''+a_1y'+a_0y=b_2u''+b_1u'+b_0u$$
 then  we can obtain a static linear parametric model (SPM) of the plant
-$$y'''={\theta^*}^T\phi$$
-where$${\theta^*}=\begin{bmatrix}a_2\\ a_1\\ a_0\\ b_2\\ b_1\\ b_0
-\end{bmatrix},\phi=\begin{bmatrix}-y''\\ -y'\\ -y\\ u''\\ u'\\ u
-\end{bmatrix}$$
-emit the term containing derivatives, then we get $a_0y=b_0u$
+$$y'''={\theta^* }^T \phi $$
+where $$ {\theta^* }= \begin{bmatrix} a_2 \\ a_1 \\ a_0 \\ b_2 \\ b_1 \\ b_0 \end{bmatrix}, \phi =\begin{bmatrix} - y'' \\ -y' \\ -y \\ u'' \\ u' \\ u \end{bmatrix} $$
+since $u$ and $y$ are available for measurement, but their derivatives are not, then we get $$a_0y=b_0u$$
 So the static linear parametric mode of the plant is 
 $$
 y=\dfrac{b_0}{a_0}u
@@ -41,25 +37,21 @@ $$
 
 
 (b) when $a_0=b_0=2$
-$G(s)=\dfrac{2s^2+b_1s+b_0}{s^3+a_2s^2+a_1s+2}$
-$$y=\dfrac{2s^2+b_1s+b_0}{s^3+a_2s^2+a_1s+2}u$$
-$$(s^3+a_2s^2+a_1s+2)y=(2s^2+b_1s+b_0)u$$
+$$
+G(s)=\dfrac{2s^2+b_1s+b_0}{s^3+a_2s^2+a_1s+2}
+$$then
+$$y=\dfrac{2s^2+b_1s+b_0}{s^3+a_2s^2+a_1s+2}u$$we get
+$$(s^3+a_2s^2+a_1s+2)y=(2s^2+b_1s+b_0)u$$then
 $$\begin{equation*}\begin{split}&\underbrace{\dfrac{s^3}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y}_{z}+a_2\dfrac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y+a_1\dfrac{s}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y+2\dfrac{1}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\-&2\dfrac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u-b_1\dfrac{s}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u-b_0\dfrac{1}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u=0\end{split}\end{equation*}$$
 then we can obtain a static linear parametric model (SPM) of the plant
-$$z={\theta^*}^T\phi$$
+$$z={\theta^*}^T\phi+2\dfrac{1}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y-2\dfrac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u$$
 where
-$$\theta^*=\begin{bmatrix}a_2\\ a_1\\ 2\\ 2\\ b_1\\ b_0
-\end{bmatrix},\phi=\begin{bmatrix}-\frac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ -\frac{s}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ -\frac{1}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ \frac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u\\ \frac{s}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u\\ \frac{1}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u
+$$\theta^*=\begin{bmatrix}a_2\\ a_1\\ b_1\\ b_0
+\end{bmatrix},\phi=\begin{bmatrix}-\frac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ -\frac{s}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ \frac{s}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u\\ \frac{1}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u
 \end{bmatrix}$$
-emit the term containing derivatives, then we get
+since $u$ and $y$ are available for measurement, but their derivatives are not, then we get 
 $$
 2y=b_0u
-$$considering $b_1,a_2,a_1$,we get
-$$
-y=\dfrac{b_0}{2}u+\dfrac{b_1}{2}\cdot\dfrac{du}{dt}-\dfrac{a_2}{2}\cdot\dfrac{dy}{dt}-\dfrac{a_1}{2}\cdot \dfrac{dy}{dt}
-$$so
-$$
-y=\dfrac{1}{2}{\theta^*}^T[\dfrac{du}{dt},u,-\dfrac{dy}{dt},-\dfrac{dy}{dt}]
 $$
 
 
@@ -82,8 +74,8 @@ $$
 (c\) when $b_0=b_1=0,b_2=3$
 $$G(s)=\dfrac{3s^2}{s^3+a_2s^2+a_1s+a_0}$$
 then
-$$y=\dfrac{3s^2}{s^3+a_2s^2+a_1s+a_0}u$$
-$$(s^3+a_2s^2+a_1s+a_0)y=3s^2u$$
+$$y=\dfrac{3s^2}{s^3+a_2s^2+a_1s+a_0}u$$so we get
+$$(s^3+a_2s^2+a_1s+a_0)y=3s^2u$$then
 $$\begin{equation*}
 \begin{split}&
 \underbrace{\dfrac{s^3}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y}_z+a_2\dfrac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\+&a_1\dfrac{s}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y+a_0\dfrac{1}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y-3\dfrac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u=0
@@ -91,10 +83,10 @@ $$\begin{equation*}
 \end{equation*}$$
 
 then we can obtain a parametric model
-$$z={\theta^*}^T\phi$$
+$$z={\theta^*}^T\phi-3\dfrac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u$$
 where
-$$\theta^*=\begin{bmatrix}a_2\\ a_1\\ a_0\\ 3
-\end{bmatrix},\phi=\begin{bmatrix}-\frac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ -\frac{s}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ -\frac{1}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ -\frac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}u
+$$\theta^*=\begin{bmatrix}a_2\\ a_1\\ a_0
+\end{bmatrix},\phi=\begin{bmatrix}-\frac{s^2}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ -\frac{s}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y\\ -\frac{1}{s^3+\lambda_2s^2+\lambda_1s+\lambda_0}y
 \end{bmatrix}$$
 
 
